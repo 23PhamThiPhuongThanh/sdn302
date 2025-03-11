@@ -1,5 +1,4 @@
 const Project = require("../models/ProjectModel");
-<<<<<<< Updated upstream
 const Position = require("../models/PositionModel");
 const mongoose = require('mongoose')
 
@@ -115,86 +114,10 @@ const searchProjectByName = async (req, res, next) => {
         });
     } catch (error) {
         next(error);
-=======
-
-const getAllProject = async (req, res) => {
-    try {
-        const { limit = 8, page = 0 } = req.query;
-        const totalProject = await Project.countDocuments();
-        const projects = await Project.find().limit(Number(limit)).skip(Number(page) * Number(limit));
-        
-        return res.status(200).json({
-            status: 'OK',
-            message: 'Get all projects successfully',
-            data: projects,
-            total: totalProject,
-            pageCurrent: Number(page) + 1,
-            totalPage: Math.ceil(totalProject / Number(limit))
-        });
-    } catch (e) {
-        return res.status(500).json({
-            status: 'ERR',
-            message: e.message
-        });
-    }
-};
-
-const getDetailsProject = async (req, res) => {
-    try {
-        const projectId = req.params.id;
-        if (!projectId) {
-            return res.status(404).json({
-                status: 'ERR',
-                message: 'The projectId is required'
-            });
-        }
-        const checkProject = await Project.findOne({ _id: projectId });
-        if (!checkProject) {
-            return res.status(404).json({
-                status: 'ERR',
-                message: 'The Project is not defined'
-            });
-        }
-        return res.status(200).json({
-            status: 'OK',
-            message: 'SUCCESS',
-            data: checkProject
-        });
-    } catch (e) {
-        return res.status(500).json({
-            status: 'ERR',
-            message: e.message
-        });
-    }
-};
-
-const searchProjectByName = async (req, res) => {
-    try {
-        const { name, limit = 8, page = 0 } = req.query;
-        const query = name ? { project_name: { $regex: name, $options: 'i' } } : {};
-        console.log("Search query:", query);
-        const totalProjects = await Project.countDocuments(query);
-        const projects = await Project.find(query).limit(Number(limit)).skip(Number(page) * Number(limit));
-        
-        return res.status(200).json({
-            status: 'OK',
-            message: projects.length ? 'Projects found successfully' : 'No projects found',
-            data: projects,
-            total: totalProjects,
-            pageCurrent: Number(page) + 1,
-            totalPage: Math.ceil(totalProjects / Number(limit))
-        });
-    } catch (e) {
-        return res.status(500).json({
-            status: 'ERR',
-            message: e.message
-        });
->>>>>>> Stashed changes
     }
 };
 
 
-<<<<<<< Updated upstream
 // Update project by id
 const updateProject = async (req, res, next) => {
     try {
@@ -247,10 +170,4 @@ module.exports = {
     searchProjectByName,
     updateProject,
     deleteProject
-=======
-module.exports = {
-    getAllProject,
-    getDetailsProject,
-    searchProjectByName
->>>>>>> Stashed changes
 };
